@@ -1,0 +1,43 @@
+<div class="wizard-container">
+  @if (!isGenerating()) {
+    <!-- Contenedor del Formulario Inicial -->
+    <div class="wizard-card fade-in">
+      <header class="wizard-header">
+        <div class="logo-brain">🧠</div>
+        <h1>AI Task Orchestrator</h1>
+        <p>
+          Transforma tus grandes metas en un grafo elástico de tareas
+          ejecutables por agentes autónomos.
+        </p>
+      </header>
+
+      <div class="form-group">
+        <label for="prompt">¿Cuál es tu próximo gran objetivo?</label>
+        <textarea
+          id="prompt"
+          [(ngModel)]="promptText"
+          placeholder="Ej: Quiero lanzar una campaña de marketing digital para mi app móvil de finanzas, incluyendo diseño de copies, configuración de píxeles de conversión y analítica..."
+          [disabled]="isGenerating()"
+        ></textarea>
+      </div>
+
+      <button
+        class="btn-orchestrate"
+        [disabled]="!promptText().trim()"
+        (click)="generateOrchestration()"
+      >
+        Orquestar Plan con IA ✨
+      </button>
+    </div>
+  } @else {
+    <!-- Contenedor de Carga Animada de la IA -->
+    <div class="loader-container scale-up">
+      <div class="cyber-spinner"></div>
+      <h2 class="loader-title">Procesando Prompt</h2>
+      <p class="loader-message">{{ loadingMessage() }}</p>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill"></div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,34 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>🧠 AI Task Orchestrator</h1>
+    <p>
+      Objetivo Activo:
+      <span class="highlight">Lanzar campaña de Marketing App móvil</span>
+    </p>
+  </header>
+
+  <div class="kanban-board">
+    <!-- Renderizado dinámico de columnas utilizando flujos de control modernos -->
+    @for (status of statuses; track status) {
+      <div
+        class="kanban-column"
+        (dragover)="$event.preventDefault()"
+        (drop)="onDrop($event, status)"
+      >
+        <h2>
+          {{ status.replace("_", " ") }} ({{
+            getTasksByStatus(status)().length
+          }})
+        </h2>
+
+        <div class="column-body">
+          @for (task of getTasksByStatus(status)(); track task.id) {
+            <app-task-card [task]="task" />
+          } @empty {
+            <div class="empty-state">No hay tareas aquí</div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,175 @@
+// Paleta de colores Cyberpunk / Catppuccin Theme
+$bg-main: #11111b
+$bg-card: #181825
+$bg-input: #1e1e2e
+$border-color: #313244
+$text-main: #cdd6f4
+$text-muted: #a6adc8
+
+$color-blue: #89b4fa
+$color-green: #a6e3a1
+$color-lavender: #b4befe
+$color-dark: #11111b
+
+.wizard-container
+  min-height: 100vh
+  display: flex
+  align-items: center
+  justify-content: center
+  background: $bg-main
+  color: $text-main
+  font-family: 'Segoe UI', Roboto, sans-serif
+  padding: 20px
+
+  .wizard-card
+    background: $bg-card
+    border: 1px solid $border-color
+    border-radius: 16px
+    padding: 40px
+    max-width: 600px
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5)
+
+    .wizard-header
+      text-align: center
+      margin-bottom: 32px
+
+      .logo-brain
+        font-size: 3rem
+        margin-bottom: 12px
+        animation: pulse 2s infinite
+
+      h1
+        color: $color-blue
+        margin: 0 0 12px 0
+        font-size: 2.2rem
+
+      p
+        color: $text-muted
+        margin: 0
+        line-height: 1.5
+
+    .form-group
+      display: flex
+      flex-direction: column
+      gap: 8px
+      margin-bottom: 24px
+
+      label
+        color: $color-green
+        font-weight: 600
+        font-size: 0.95rem
+
+      textarea
+        background: $bg-input
+        border: 1px solid #45475a
+        border-radius: 8px
+        color: $text-main
+        padding: 16px
+        font-size: 1rem
+        resize: none
+        height: 140px
+        transition: border-color 0.2s, box-shadow 0.2s
+
+        &:focus
+          outline: none
+          border-color: $color-blue
+          box-shadow: 0 0 0 3px rgba(137, 180, 250, 0.15)
+
+    .btn-orchestrate
+      width: 100%
+      background: $color-blue
+      color: $color-dark
+      border: none
+      padding: 14px
+      border-radius: 8px
+      font-size: 1.1rem
+      font-weight: bold
+      cursor: pointer
+      transition: background 0.2s, transform 0.1s
+
+      &:hover:not(:disabled)
+        background: $color-lavender
+        transform: translateY(-1px)
+
+      &:disabled
+        background: $border-color
+        color: #585b70
+        cursor: not-allowed
+
+  // Contenedor de Carga Animada de la IA
+  .loader-container
+    text-align: center
+
+    .cyber-spinner
+      width: 64px
+      height: 64px
+      border: 4px solid rgba(137, 180, 250, 0.1)
+      border-left-color: $color-blue
+      border-radius: 50%
+      margin: 0 auto 24px auto
+      animation: spin 1s linear infinite
+
+    .loader-title
+      color: $color-blue
+      margin: 0 0 8px 0
+
+    .loader-message
+      color: $text-muted
+      font-style: italic
+      margin-bottom: 24px
+
+    .progress-bar-container
+      width: 280px
+      height: 6px
+      background: $border-color
+      border-radius: 3px
+      margin: 0 auto
+      overflow: hidden
+
+      .progress-bar-fill
+        height: 100%
+        background: linear-gradient(90deg, $color-blue, $color-green)
+        border-radius: 3px
+        animation: loadingBar 6s ease-in-out infinite
+
+// Animaciones Globales de la Feature
+@keyframes spin
+  to
+    transform: rotate(360deg)
+
+@keyframes pulse
+  0%, 100%
+    transform: scale(1)
+  50%
+    transform: scale(1.05)
+
+@keyframes loadingBar
+  0%
+    width: 0%
+  50%
+    width: 70%
+  100%
+    width: 100%
+
+.fade-in
+  animation: fadeIn 0.4s ease-out
+
+.scale-up
+  animation: scaleUp 0.3s ease-out
+
+@keyframes fadeIn
+  from
+    opacity: 0
+    transform: translateY(10px)
+  to
+    opacity: 1
+    transform: translateY(0)
+
+@keyframes scaleUp
+  from
+    opacity: 0
+    transform: scale(0.95)
+  to
+    opacity: 1
+    transform: scale(1)
