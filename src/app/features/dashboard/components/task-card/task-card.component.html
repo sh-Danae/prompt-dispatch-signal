@@ -1,0 +1,23 @@
+<div
+  class="task-card"
+  [class]="task().priority.toLowerCase()"
+  [class.blocked]="task().status === 'BLOCKED'"
+  draggable="true"
+  (dragstart)="onDragStart($event)"
+>
+  <div class="card-header">
+    <span class="badge priority">{{ task().priority }}</span>
+    @if (task().dependsOn.length > 0) {
+      <span class="badge dependencies"
+        >🔗 {{ task().dependsOn.length }} dep</span
+      >
+    }
+  </div>
+
+  <h3>{{ task().title }}</h3>
+  <p>{{ task().description }}</p>
+
+  @if (task().agentId) {
+    <div class="agent-tag">🤖 {{ task().agentId }}</div>
+  }
+</div>

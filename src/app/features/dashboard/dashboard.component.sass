@@ -1,0 +1,67 @@
+// Variables del Dashboard
+$bg-board: #11111b
+$bg-column: #181825
+$border-split: #313244
+$title-column: #a6adc8
+$accent-blue: #89b4fa
+$accent-green: #a6e3a1
+
+.dashboard-container
+  padding: 24px
+  background: $bg-board
+  min-height: 100vh
+
+  .dashboard-header
+    margin-bottom: 24px
+    
+    h1
+      margin: 0 0 8px 0
+      color: $accent-blue
+      font-size: 2rem
+      
+    p
+      margin: 0
+      color: #94e2d5
+      
+      .highlight
+        color: $accent-green
+        font-weight: bold
+
+  .kanban-board
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+    gap: 16px
+    align-items: start
+
+    .kanban-column
+      background: $bg-column
+      border-radius: 12px
+      padding: 16px
+      min-height: 75vh
+      display: flex
+      flex-direction: column
+      border: 1px solid $border-split
+
+      h2
+        font-size: 0.95rem
+        text-transform: uppercase
+        color: $title-column
+        margin: 0 0 16px 0
+        padding-bottom: 8px
+        border-bottom: 2px solid $border-split
+        letter-spacing: 0.5px
+
+      .column-body
+        flex-grow: 1
+        display: flex
+        flex-direction: column
+        min-height: 150px
+
+        .empty-state
+          border: 2px dashed $border-split
+          border-radius: 8px
+          padding: 20px
+          text-align: center
+          color: #585b70
+          font-size: 0.85rem
+          margin: auto 0
