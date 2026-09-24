@@ -1,23 +1,38 @@
 <div
-  class="task-card"
+  class="card task-card shadow-sm"
   [class]="task().priority.toLowerCase()"
-  [class.blocked]="task().status === 'BLOCKED'"
+  [class.is-blocked]="task().status === 'BLOCKED'"
   draggable="true"
   (dragstart)="onDragStart($event)"
 >
-  <div class="card-header">
-    <span class="badge priority">{{ task().priority }}</span>
-    @if (task().dependsOn.length > 0) {
-      <span class="badge dependencies"
-        >🔗 {{ task().dependsOn.length }} dep</span
-      >
+  <div class="card-body p-3">
+    <!-- Encabezado de la Tarjeta: Badges de Estado -->
+    <div
+      class="card-meta d-flex justify-content-between align-items-center mb-2"
+    >
+      <span class="badge-priority text-uppercase tracking-wider">{{
+        task().priority
+      }}</span>
+
+      @if (task().dependsOn.length > 0) {
+        <span class="badge-dependency d-flex align-items-center gap-1">
+          🔗 <span class="fw-semibold">{{ task().dependsOn.length }} dep</span>
+        </span>
+      }
+    </div>
+
+    <!-- Título y Descripción -->
+    <h3 class="task-title h6 fw-bold text-dark mb-1">{{ task().title }}</h3>
+    <p class="task-desc small text-muted mb-3">{{ task().description }}</p>
+
+    <!-- Pie de la Tarjeta: Asignación de Agentes de IA -->
+    @if (task().agentId) {
+      <div class="agent-box d-flex align-items-center gap-1.5 mt-2">
+        <span class="agent-avatar">🤖</span>
+        <span class="agent-name fw-medium text-secondary">{{
+          task().agentId
+        }}</span>
+      </div>
     }
   </div>
-
-  <h3>{{ task().title }}</h3>
-  <p>{{ task().description }}</p>
-
-  @if (task().agentId) {
-    <div class="agent-tag">🤖 {{ task().agentId }}</div>
-  }
 </div>

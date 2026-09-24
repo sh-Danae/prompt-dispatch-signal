@@ -1,43 +1,85 @@
-<div class="wizard-container">
-  @if (!isGenerating()) {
-    <!-- Contenedor del Formulario Inicial -->
-    <div class="wizard-card fade-in">
-      <header class="wizard-header">
-        <div class="logo-brain">🧠</div>
-        <h1>AI Task Orchestrator</h1>
-        <p>
-          Transforma tus grandes metas en un grafo elástico de tareas
-          ejecutables por agentes autónomos.
-        </p>
-      </header>
+<!-- Escuchamos el evento de toggle del sidebar para sincronizar el contenedor general -->
+<app-sidebar (collapsedChanged)="onSidebarToggle($event)"></app-sidebar>
 
-      <div class="form-group">
-        <label for="prompt">¿Cuál es tu próximo gran objetivo?</label>
-        <textarea
-          id="prompt"
-          [(ngModel)]="promptText"
-          placeholder="Ej: Quiero lanzar una campaña de marketing digital para mi app móvil de finanzas, incluyendo diseño de copies, configuración de píxeles de conversión y analítica..."
-          [disabled]="isGenerating()"
-        ></textarea>
+<!-- El Header ahora recibe el estado para saber cuánto desplazarse a la izquierda -->
+<app-header [isSidebarCollapsed]="sidebarCollapsed()"></app-header>
+
+<div
+  class="gemini-chat-container"
+  [class.sidebar-is-collapsed]="sidebarCollapsed()"
+>
+  @if (!isGenerating()) {
+    <div class="chat-viewport fade-in">
+      <div class="chat-welcome-area">
+        <header class="welcome-header mb-5">
+          <h1 class="gemini-greeting">
+            Hola. ¿Qué plan quieres orquestar hoy?
+          </h1>
+          <p class="gemini-subtitle text-muted">
+            Introduce un gran objetivo en texto plano y los agentes autónomos de
+            IA estructurarán tus tareas en milisegundos.
+          </p>
+        </header>
+
+        <div class="gemini-suggestions-grid row g-3 max-w-chat">
+          @for (suggestion of currentSuggestions(); track suggestion.label) {
+            <div class="col-12 col-md-4">
+              <div
+                class="card suggestion-card p-3 border-light h-100"
+                (click)="selectSuggestion(suggestion.text)"
+              >
+                <div
+                  class="card-body p-0 d-flex flex-column justify-content-between"
+                >
+                  <p class="suggestion-text small text-dark mb-3">
+                    {{ suggestion.text }}
+                  </p>
+                  <span class="suggestion-tag-label fw-bold text-secondary">{{
+                    suggestion.label
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
       </div>
 
-      <button
-        class="btn-orchestrate"
-        [disabled]="!promptText().trim()"
-        (click)="generateOrchestration()"
-      >
-        Orquestar Plan con IA ✨
-      </button>
+      <div class="chat-input-area-wrapper">
+        <div class="chat-input-container shadow-sm border">
+          <textarea
+            id="prompt"
+            class="gemini-textarea"
+            [ngModel]="promptText()"
+            (ngModelChange)="promptText.set($event)"
+            [placeholder]="inputPlaceholder()"
+            rows="2"
+          ></textarea>
+          <div
+            class="chat-input-actions d-flex justify-content-between align-items-center pt-2"
+          >
+            <span class="character-counter text-muted small"
+              >{{ charCount() }} caracteres</span
+            >
+            <button
+              class="btn-send-prompt"
+              [disabled]="!isPromptValid()"
+              (click)="generateOrchestration()"
+            >
+              ✨
+            </button>
+          </div>
+        </div>
+        <p class="disclaimer-text text-center text-muted small mt-2">
+          Orchestrator AI puede cometer errores.
+        </p>
+      </div>
     </div>
   } @else {
-    <!-- Contenedor de Carga Animada de la IA -->
-    <div class="loader-container scale-up">
-      <div class="cyber-spinner"></div>
-      <h2 class="loader-title">Procesando Prompt</h2>
-      <p class="loader-message">{{ loadingMessage() }}</p>
-      <div class="progress-bar-container">
-        <div class="progress-bar-fill"></div>
-      </div>
+    <div
+      class="loader-viewport d-flex flex-column align-items-center justify-content-center scale-up"
+    >
+      <div class="elegant-spinner mb-4"></div>
+      <h2 class="h4 fw-bold text-dark mb-2">Orquestando Grafo de Tareas</h2>
     </div>
   }
 </div>

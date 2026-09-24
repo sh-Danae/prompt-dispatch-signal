@@ -1,18 +1,19 @@
 import { Component, input, output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Task } from '../../../../core/models/task.model';
 
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './task-card.component.html',
-  styleUrl: './task-card.component.sass',
+  styleUrls: ['./task-card.component.sass'],
 })
 export class TaskCardComponent {
-  // Inputs usando Signals (Angular 19)
+  // Inputs modernos basados en Angular Signals
   task = input.required<Task>();
 
-  // Outputs usando la nueva API output()
+  // Emiisón de eventos nativos usando la API output()
   dragged = output<string>();
 
   onDragStart(event: DragEvent) {

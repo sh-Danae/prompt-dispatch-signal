@@ -1,0 +1,139 @@
+// Variables del Ecosistema Minimalista Blanco Hueso
+$bg-bones: #fdfbf7
+$bg-white: #ffffff
+$border-elegant: #e6e4df
+$text-dark: #1f1f1f
+$text-muted: #5f6368
+
+.gemini-sidebar
+  position: fixed
+  top: 0 //64px // Queda perfectamente abajo del Header global
+  left: 0
+  bottom: 0
+  width: 256px
+  background-color: $bg-bones
+  border-right: 1px solid $border-elegant
+  display: flex
+  flex-direction: column
+  padding: 12px
+  z-index: 1001//999
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1)
+  user-select: none
+
+  // Estado contraído estilo Gemini
+  &.is-collapsed
+    width: 68px
+
+    .sidebar-action
+      .btn-new-plan
+        width: 44px
+        padding: 0
+        justify-content: center
+        border-radius: 50%
+
+    .history-list
+      .history-item
+        justify-content: center
+        padding: 10px 0
+
+  .sidebar-trigger
+    margin-bottom: 16px
+    padding-left: 8px
+    
+    .btn-icon
+      background: none
+      border: none
+      font-size: 1.2rem
+      color: $text-dark
+      cursor: pointer
+      border-radius: 50%
+      width: 40px
+      height: 40px
+      display: flex
+      align-items: center
+      justify-content: center
+      transition: background-color 0.15s ease
+      &:hover
+        background-color: rgba(0, 0, 0, 0.04)
+
+  .sidebar-action
+    margin-bottom: 24px
+    display: flex
+    justify-content: flex-start
+    padding-left: 4px
+
+    .btn-new-plan
+      display: flex
+      align-items: center
+      gap: 12px
+      background-color: #e8f0fe
+      border: none
+      color: #1a73e8
+      padding: 0 20px
+      height: 44px
+      border-radius: 16px
+      font-size: 0.88rem
+      font-weight: 600
+      cursor: pointer
+      width: 100%
+      max-width: 140px
+      transition: all 0.2s ease
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05)
+      &:hover
+        background-color: #d2e3fc
+        box-shadow: 0 4px 6px rgba(0,0,0,0.08)
+
+      .action-icon
+        font-size: 0.95rem
+
+  .sidebar-history
+    flex-grow: 1
+    display: flex
+    flex-direction: column
+    overflow-y: auto
+
+    .history-title
+      font-size: 0.72rem
+      font-weight: 700
+      color: $text-muted
+      letter-spacing: 0.8px
+      margin: 0 0 12px 12px
+
+    .history-list
+      display: flex
+      flex-direction: column
+      gap: 2px
+
+      .history-item
+        display: flex
+        align-items: center
+        gap: 12px
+        padding: 10px 14px
+        border-radius: 999px
+        color: $text-dark
+        text-decoration: none
+        font-size: 0.85rem
+        font-weight: 500
+        transition: background-color 0.15s ease
+        white-space: nowrap
+        overflow: hidden
+
+        &:hover
+          background-color: rgba(0, 0, 0, 0.04)
+
+        .item-icon
+          font-size: 1rem
+
+        .item-label
+          text-overflow: ellipsis
+          overflow: hidden
+
+// Micro-animación para ocultar el texto suavemente
+.fade-text
+  animation: fadeInText 0.2s ease-out
+
+@keyframes fadeInText
+  from
+    opacity: 0
+  to
+    opacity: 1

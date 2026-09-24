@@ -1,0 +1,34 @@
+<aside class="gemini-sidebar" [class.is-collapsed]="isCollapsed()">
+  <!-- Botón de Menú Superior (Hamburguesa) -->
+  <div class="sidebar-trigger">
+    <button type="button" class="btn-icon" (click)="toggleSidebar()">☰</button>
+  </div>
+
+  <!-- Botón de Acción Principal: Nuevo Plan -->
+  <div class="sidebar-action">
+    <button type="button" class="btn-new-plan">
+      <span class="action-icon">➕</span>
+      @if (!isCollapsed()) {
+        <span class="action-label fade-text">Nuevo plan</span>
+      }
+    </button>
+  </div>
+
+  <!-- Lista de Historial Reciente -->
+  <div class="sidebar-history">
+    @if (!isCollapsed()) {
+      <p class="history-title fade-text text-uppercase">Recientes</p>
+    }
+
+    <nav class="history-list">
+      @for (plan of recentPlans; track plan.id) {
+        <a href="#" class="history-item" [title]="plan.title">
+          <span class="item-icon">💬</span>
+          @if (!isCollapsed()) {
+            <span class="item-label fade-text">{{ plan.title }}</span>
+          }
+        </a>
+      }
+    </nav>
+  </div>
+</aside>
