@@ -1,0 +1,110 @@
+$bg-white: #ffffff
+$bg-bones: #fdfbf7
+$border-soft: #e6e4df
+$text-dark: #1f1f1f
+$text-muted: #5f6368
+$accent-blue: #1a73e8
+
+.gemini-header
+  position: fixed
+  top: 0
+  left: 256px
+  right: 0
+  height: 64px
+  background-color: $bg-white
+  border-bottom: 1px solid $border-soft
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: 0 24px
+  z-index: 1000
+  user-select: none
+  transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1) // 💡 TRANSICIÓN ELÁSTICA
+
+  // 💡 NUEVO: El header se desliza a la izquierda cuando el sidebar se encoge
+  &.sidebar-is-collapsed
+    left: 68px
+
+  .header-left
+    display: flex
+    align-items: center
+    gap: 32px
+
+    .brand
+      display: flex
+      align-items: center
+      gap: 8px
+      
+      .brand-spark
+        font-size: 1.25rem
+        background: linear-gradient(45deg, #4285f4, #9b51e0)
+        -webkit-background-clip: text
+        -webkit-text-fill-color: transparent
+
+      .brand-text
+        font-size: 1.1rem
+        font-weight: 600
+        color: $text-dark
+        letter-spacing: -0.3px
+
+    .nav-links
+      display: flex
+      align-items: center
+      gap: 4px
+
+      .nav-item
+        display: flex
+        align-items: center
+        gap: 6px
+        padding: 8px 16px
+        border-radius: 999px
+        color: $text-muted
+        text-decoration: none
+        font-size: 0.88rem
+        font-weight: 500
+        transition: all 0.15s ease
+
+        &:hover
+          background-color: #f1f3f4
+          color: $text-dark
+
+        &.is-active
+          background-color: #e8f0fe70
+          color: $accent-blue
+
+  .header-right
+    display: flex
+    align-items: center
+    gap: 16px
+
+    .model-selector
+      display: flex
+      align-items: center
+      gap: 8px
+      border: 1px solid $border-soft
+      padding: 6px 14px
+      border-radius: 999px
+      background-color: $bg-bones
+
+      .status-dot
+        width: 6px
+        height: 6px
+        background-color: #34a853
+        border-radius: 50%
+
+      .model-name
+        font-size: 0.82rem
+        font-weight: 600
+        color: $text-dark
+
+    .profile-avatar
+      width: 32px
+      height: 32px
+      background-color: #3f51b5
+      color: #ffffff
+      border-radius: 50%
+      display: flex
+      align-items: center
+      justify-content: center
+      font-weight: 600
+      font-size: 0.85rem

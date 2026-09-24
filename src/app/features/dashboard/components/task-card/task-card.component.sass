@@ -1,83 +1,91 @@
-// Paleta Local para Tarjetas
-$bg-card: #1e1e2e
-$bg-badge: #313244
-$text-light: #cdd6f4
-$text-muted: #bac2de
-$tag-agent: #89b4fa
+// Paleta Minimalista Local
+$text-dark: #18181b
+$text-muted: #737373
+$border-soft: #f1f1ef
+$bg-bones-light: #faf9f6
 
-// Estados de Prioridad (Colores Cyberpunk de Borde)
-$color-critical: #f38ba8
-$color-high: #fab387
-$color-medium: #eed49f
-$color-low: #a6e3a1
+// Colores de Prioridad (Tonos Muted / Pastel Premium)
+$priority-critical: #fee2e2
+$text-critical: #991b1b
+
+$priority-high: #ffedd5
+$text-orange: #9a3412
+
+$priority-medium: #fef9c3
+$text-yellow: #854d0e
+
+$priority-low: #f0fdf4
+$text-green: #166534
 
 .task-card
-  background: $bg-card
-  border-radius: 8px
-  padding: 16px
-  margin-bottom: 12px
-  border-left: 5px solid $text-light
+  background-color: #ffffff !important
+  border: 1px solid #e2e8f0 !important
+  border-radius: 10px !important
   cursor: grab
-  transition: transform 0.2s ease, box-shadow 0.2s ease
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1)
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease
+  user-select: none
 
   &:active
     cursor: grabbing
-    transform: scale(0.98)
+    transform: scale(0.97)
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04) !important
 
-  // Variaciones dinámicas de bordes por prioridad
-  &.critical
-    border-left-color: $color-critical
-  &.high
-    border-left-color: $color-high
-  &.medium
-    border-left-color: $color-medium
-  &.low
-    border-left-color: $color-low
-
-  &.blocked
-    border-left-color: $color-critical
-    opacity: 0.5
+  // Comportamiento de Tarea Bloqueada por dependencias
+  &.is-blocked
+    opacity: 0.55
+    background-color: $bg-bones-light !important
+    border-style: dashed !important
     cursor: not-allowed
+    &:active
+      transform: none
 
-  .card-header
-    display: flex
-    justify-content: space-between
-    align-items: center
-    margin-bottom: 8px
+  // Modificadores de Prioridad (Estilo Badges Planos)
+  &.critical .badge-priority
+    background-color: $priority-critical
+    color: $text-critical
+  &.high .badge-priority
+    background-color: $priority-high
+    color: $text-orange
+  &.medium .badge-priority
+    background-color: $priority-medium
+    color: $text-yellow
+  &.low .badge-priority
+    background-color: $priority-low
+    color: $text-green
 
-    .badge
-      font-size: 0.75rem
-      padding: 2px 6px
-      border-radius: 4px
-      font-weight: bold
-      
-      &.priority
-        background: $bg-badge
-        color: $text-light
-        
-      &.dependencies
-        background: #f9e2af
-        color: #11111b
+  .badge-priority
+    font-size: 0.68rem
+    font-weight: 700
+    padding: 3px 8px
+    border-radius: 6px
+    letter-spacing: 0.5px
 
-  h3
-    margin: 0 0 8px 0
-    font-size: 1.1rem
-    color: $text-light
-
-  p
-    margin: 0 0 12px 0
-    font-size: 0.9rem
+  .badge-dependency
+    font-size: 0.72rem
     color: $text-muted
+    background-color: $bg-bones-light
+    padding: 2px 6px
+    border-radius: 6px
+    border: 1px solid #f4f4f2
+
+  .task-title
+    letter-spacing: -0.2px
+    line-height: 1.4
+
+  .task-desc
+    line-height: 1.5
     display: -webkit-box
     -webkit-line-clamp: 2
     -webkit-box-orient: vertical
     overflow: hidden
 
-  .agent-tag
-    font-size: 0.8rem
-    color: $tag-agent
-    background: rgba(137, 180, 250, 0.1)
-    padding: 4px 8px
-    border-radius: 4px
-    width: fit-content
+  .agent-box
+    border-top: 1px solid $border-soft
+    padding-top: 10px
+    font-size: 0.75rem
+
+    .agent-avatar
+      filter: grayscale(20%)
+      
+    .agent-name
+      letter-spacing: -0.1px

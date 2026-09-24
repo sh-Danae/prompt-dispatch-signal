@@ -1,0 +1,23 @@
+<header
+  class="gemini-header"
+  [class.sidebar-is-collapsed]="isSidebarCollapsed()"
+>
+  <div class="header-left">
+    <nav class="nav-links">
+      @for (item of menuItems; track item.label) {
+        <a href="#" class="nav-item" [class.is-active]="item.active">
+          <!--span class="nav-icon">{{ item.icon }}</span-->
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  </div>
+
+  <div class="header-right">
+    <div class="model-selector">
+      <span class="status-dot"></span>
+      <span class="model-name">Dana July</span>
+    </div>
+    <div class="profile-avatar">D</div>
+  </div>
+</header>

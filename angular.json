@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "sass"
         }
       },
       "root": "",
@@ -20,11 +20,9 @@
             "outputPath": "dist/prompt-dispatch-signal",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
+            "inlineStyleLanguage": "sass",
             "assets": [
               {
                 "glob": "**/*",
@@ -32,7 +30,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/@coreui/coreui/dist/css/coreui.min.css",
+              "src/styles.sass"
             ],
             "scripts": []
           },
@@ -78,12 +77,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
+            "inlineStyleLanguage": "sass",
             "assets": [
               {
                 "glob": "**/*",
@@ -91,7 +87,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/@coreui/coreui/dist/css/coreui.min.css",
+              "src/styles.sass"
             ],
             "scripts": []
           }

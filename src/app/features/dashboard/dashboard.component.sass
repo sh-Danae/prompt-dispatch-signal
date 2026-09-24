@@ -1,67 +1,49 @@
-// Variables del Dashboard
-$bg-board: #11111b
-$bg-column: #181825
-$border-split: #313244
-$title-column: #a6adc8
-$accent-blue: #89b4fa
-$accent-green: #a6e3a1
+// Variables de la Guía de Diseño Claro de Gemini / CoreUI
+$bg-bones: #fdfbf7
+$border-elegant: #e6e4df
+$text-dark: #1f1f1f
 
-.dashboard-container
-  padding: 24px
-  background: $bg-board
+.gemini-dashboard-viewport
+  margin-left: 256px // 💡 Espacio inicial alineado con el Sidebar Abierto
+  padding-top: 64px  // 💡 Espacio inicial alineado con el Header Fijo
+  background-color: $bg-bones
   min-height: 100vh
+  transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1) // 💡 EFECTO ELÁSTICO FLUIDO
 
-  .dashboard-header
-    margin-bottom: 24px
-    
-    h1
-      margin: 0 0 8px 0
-      color: $accent-blue
-      font-size: 2rem
-      
-    p
-      margin: 0
-      color: #94e2d5
-      
-      .highlight
-        color: $accent-green
-        font-weight: bold
+  // 💡 NUEVO: Deslizamiento elástico automatizado por Signal
+  &.sidebar-is-collapsed
+    margin-left: 68px
 
-  .kanban-board
-    display: grid
-    grid-template-columns: repeat(4, 1fr)
-    gap: 16px
-    align-items: start
+  .kanban-column-card
+    min-height: 70vh
+    border-radius: 12px !important
+    border: 1px solid $border-elegant !important
+    display: flex
+    flex-direction: column
 
-    .kanban-column
-      background: $bg-column
-      border-radius: 12px
-      padding: 16px
-      min-height: 75vh
+    .tracking-wide
+      letter-spacing: 0.5px
+
+    .column-drop-zone
+      flex-grow: 1
       display: flex
       flex-direction: column
-      border: 1px solid $border-split
+      min-height: 200px
 
-      h2
-        font-size: 0.95rem
-        text-transform: uppercase
-        color: $title-column
-        margin: 0 0 16px 0
-        padding-bottom: 8px
-        border-bottom: 2px solid $border-split
-        letter-spacing: 0.5px
+      .empty-state-box
+        border-style: dashed !important
+        border-width: 2px !important
+        border-color: #cbd5e1 !important
+        background-color: #faf9f6 !important
 
-      .column-body
-        flex-grow: 1
-        display: flex
-        flex-direction: column
-        min-height: 150px
+// Animaciones de Carga y Entrada de Datos
+.fade-in
+  animation: fadeInGrid 0.4s ease-out
 
-        .empty-state
-          border: 2px dashed $border-split
-          border-radius: 8px
-          padding: 20px
-          text-align: center
-          color: #585b70
-          font-size: 0.85rem
-          margin: auto 0
+@keyframes fadeInGrid
+  from
+    opacity: 0
+    transform: translateY(6px)
+  to
+    opacity: 1
+    transform: translateY(0)
