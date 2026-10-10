@@ -1,8 +1,10 @@
-<!-- Escuchamos el evento de toggle del sidebar para sincronizar el contenedor general -->
 <app-sidebar (collapsedChanged)="onSidebarToggle($event)"></app-sidebar>
 
-<!-- El Header ahora recibe el estado para saber cuánto desplazarse a la izquierda -->
-<app-header [isSidebarCollapsed]="sidebarCollapsed()"></app-header>
+<app-header
+  [isSidebarCollapsed]="sidebarCollapsed()"
+  [hederValue]="hederValue()"
+  (hederValueChange)="onHeaderTabChange($event)"
+></app-header>
 
 <div
   class="gemini-chat-container"

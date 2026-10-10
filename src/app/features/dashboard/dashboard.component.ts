@@ -24,6 +24,7 @@ import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 })
 export class DashboardComponent implements OnInit {
   private store = inject(Store);
+  //public hederValue: string = '';
 
   readonly statuses: TaskStatus[] = [
     'PENDING',
@@ -34,13 +35,15 @@ export class DashboardComponent implements OnInit {
 
   // Signal reactiva para el control elástico del layout
   sidebarCollapsed = signal<boolean>(false);
-
+  hederValue = signal<string>('');
   // Selector global inyectado directo a una Signal de Angular 19
   tasksSignal: Signal<Task[]> = this.store.selectSignal((state: any) => {
     return (state?.tasksFeature?.tasks as Task[]) || [];
   });
 
   ngOnInit() {
+    console.log('Into Here....?');
+    this.hederValue.set('board');
     // Si entramos directo o recargamos el Dashboard, aseguramos datos iniciales mockeados
     if (this.tasksSignal().length === 0) {
       this.store.dispatch(

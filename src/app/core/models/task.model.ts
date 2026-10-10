@@ -8,7 +8,7 @@ export interface Task {
   description: string;
   priority: TaskPriority;
   status: TaskStatus;
-  dependsOn: string[]; // IDs de tareas de las que depende
+  dependsOn: string[];
   agentId?: string;
   createdAt: string;
 }

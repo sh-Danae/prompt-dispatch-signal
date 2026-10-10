@@ -2,7 +2,10 @@
 <app-sidebar (collapsedChanged)="onSidebarToggle($event)"></app-sidebar>
 
 <!-- Enviamos de manera reactiva el estado al Header -->
-<app-header [isSidebarCollapsed]="sidebarCollapsed()"></app-header>
+<app-header
+  [isSidebarCollapsed]="sidebarCollapsed()"
+  [hederValue]="hederValue()"
+></app-header>
 
 <!-- Contenedor maestro con respuesta elástica al Sidebar -->
 <div

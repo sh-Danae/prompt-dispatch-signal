@@ -1,9 +1,11 @@
-import { Component, signal, inject, computed } from '@angular/core';
+import { Component, signal, inject, computed, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TasksActions } from '../../core/store/tasks/tasks.actions';
+import { GoalsActions } from '../../core/store/goals/goals.actions';
+import { selectRecentGoals } from '../../core/store/goals/goals.selectors';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 
@@ -15,38 +17,39 @@ import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
   styleUrls: ['./prompt-wizard.component.sass'],
 })
 export class PromptWizardComponent {
-  private router = inject(Router);
   private store = inject(Store);
 
   sidebarCollapsed = signal<boolean>(false);
   promptText = signal<string>('');
   isGenerating = signal<boolean>(false);
   loadingMessage = signal<string>('Analizando objetivo principal...');
+  hederValue = signal<string>('Prompts');
 
   charCount = computed(() => this.promptText().length);
   isPromptValid = computed(() => this.promptText().trim().length >= 10);
 
-  readonly suggestions = [
-    {
-      label: '🚀 Lanzar App',
-      text: 'Quiero lanzar una campaña de marketing digital para mi app móvil de finanzas, incluyendo diseño de copies, configuración de píxeles de conversión y analítica.',
-    },
-    {
-      label: '📦 Rediseño E-commerce',
-      text: 'Necesito migrar mi tienda de Shopify a un desarrollo propio en Angular, manteniendo SEO, reestructurando pasarelas de pago y optimizando imágenes.',
-    },
-    {
-      label: '🛡️ Auditoría de Seguridad',
-      text: 'Planificar una auditoría de ciberseguridad completa para nuestra infraestructura cloud en AWS, configurando políticas IAM y escaneando vulnerabilidades.',
-    },
-  ];
+  // Leemos los últimos 3 prompts directamente desde el Store de NgRx como una Signal
+  recentGoalsSignal: Signal<string[]> =
+    this.store.selectSignal(selectRecentGoals);
 
-  currentSuggestions = computed(() => this.suggestions);
+  // Mapeamos dinámicamente las sugerencias para construir las etiquetas (Top 1, Top 2, Top 3)
+  currentSuggestions = computed(() => {
+    const icons = ['🚀 Reciente 1', '📦 Reciente 2', '🛡️ Reciente 3'];
+    return this.recentGoalsSignal().map((text, index) => ({
+      label: icons[index] || '💬 Reciente',
+      text: text,
+    }));
+  });
+
   inputPlaceholder = computed(
-    () => 'Ej: Quiero lanzar una campaña de marketing digital...',
+    () => 'Ej: Introduce tu próximo gran objetivo para desglosarlo con IA...',
   );
+  onHeaderTabChange(newValue: string) {
+    this.hederValue.set(newValue);
 
-  // 💡 SOLUCIÓN: Agregamos el método que le hacía falta a la UI
+    // Opcional: Si deseas limpiar el cuadro de texto al cambiar de pestaña estilo Gemini
+    this.promptText.set('');
+  }
   selectSuggestion(text: string) {
     this.promptText.set(text);
   }
@@ -57,6 +60,8 @@ export class PromptWizardComponent {
 
   generateOrchestration() {
     if (!this.isPromptValid()) return;
+
+    const currentPrompt = this.promptText();
     this.isGenerating.set(true);
 
     let phaseIndex = 0;
@@ -73,13 +78,19 @@ export class PromptWizardComponent {
         this.loadingMessage.set(loadingPhases[phaseIndex]);
       } else {
         clearInterval(interval);
-        this.finalizeOrchestration();
+        this.finalizeOrchestration(currentPrompt);
       }
     }, 1500);
   }
 
-  private finalizeOrchestration() {
+  private finalizeOrchestration(promptToSave: string) {
+    // 1. Guardamos el prompt enviado en el historial inmutable
+    this.store.dispatch(GoalsActions.saveRecentGoal({ text: promptToSave }));
+
+    // 2. Disparamos el motor asíncrono para recalcular el árbol de tareas
     this.store.dispatch(TasksActions.recalculateDependencies());
-    this.router.navigate(['/dashboard']);
+
+    // 💡 REMOVIDO: Quitamos el router.navigate de aquí.
+    // Ahora el Effect 'navigateToDashboard$' se encarga de cambiar la pantalla de forma ordenada.
   }
 }
