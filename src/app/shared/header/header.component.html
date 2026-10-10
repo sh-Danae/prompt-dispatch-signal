@@ -3,10 +3,16 @@
   [class.sidebar-is-collapsed]="isSidebarCollapsed()"
 >
   <div class="header-left">
+    <!-- Ejemplo conceptual de tu bucle en header.component.html -->
     <nav class="nav-links">
-      @for (item of menuItems; track item.label) {
-        <a href="#" class="nav-item" [class.is-active]="item.active">
-          <!--span class="nav-icon">{{ item.icon }}</span-->
+      @for (item of menuItems(); track item.label) {
+        <a
+          href="#"
+          class="nav-item"
+          [class.is-active]="item.active"
+          (click)="$event.preventDefault(); selectTab(item.label)"
+        >
+          <span class="nav-icon">{{ item.icon }}</span>
           <span class="nav-label">{{ item.label }}</span>
         </a>
       }

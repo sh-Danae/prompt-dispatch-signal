@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core'; // 💡 Importa input
+import { Component, computed, input, output } from '@angular/core'; // 💡 Importamos output
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,14 +10,29 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
   isSidebarCollapsed = input<boolean>(false);
+  hederValue = input<string>();
 
-  readonly menuItems = [
-    { label: 'prompt', icon: '🎨', active: true },
-    { label: 'Task', icon: '🎨', active: false },
+  // 💡 NUEVO: Emitirá el nombre de la pestaña al hacer clic hacia el PromptWizard
+  hederValueChange = output<string>();
+
+  readonly rawMenuItems = [
+    { label: 'Prompts', icon: '🎨', active: true },
     { label: 'Board', icon: '🎨', active: false },
+    { label: 'Tasks', icon: '🎨', active: false },
     { label: 'Graphic', icon: '🎨', active: false },
-    { label: 'Modo Orchestrator AI', icon: '🧠', active: false },
-    { label: 'Todos', icon: '🧠', active: false },
-    { label: 'Imagen', icon: '🎨', active: false },
   ];
+
+  // Ejecuta la emisión del evento hacia el padre
+  selectTab(label: string) {
+    this.hederValueChange.emit(label);
+  }
+
+  public menuItems = computed(() => {
+    const currentValue = this.hederValue();
+    return this.rawMenuItems.map((item) => ({
+      ...item,
+      active:
+        item.label.toLocaleLowerCase() === currentValue?.toLocaleLowerCase(),
+    }));
+  });
 }
